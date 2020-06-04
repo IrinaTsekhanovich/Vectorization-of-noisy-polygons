@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 from scipy.optimize import minimize
 import gmsh
 from collections import deque
-from PIL import Image, ImageDraw
 
 def findcontours_suzuki(data, symbol):
     img = []
