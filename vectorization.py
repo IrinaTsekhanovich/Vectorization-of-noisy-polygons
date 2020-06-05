@@ -413,7 +413,6 @@ def create_rctngl_new(cnv1, appr):
 
     first_line = create_line([points[0][1],points[0][2]], [points[1][1],points[1][2]])
     l0 = [first_line[0], first_line[1], first_line[2], 1, 1, 1]
-    # l0 = [1,1,1,1,1,1]
     coef = minimize(fun, l0, method='BFGS')
     lines = []
     lines.append((coef['x'][0], coef['x'][1], coef['x'][2]))
@@ -464,7 +463,7 @@ appr_cnv_first = cv2.approxPolyDP(cnv[0][1], 0.78, True)
 res_points.append([])
 for c in appr_cnv_first:
     res_points[len(res_points)-1].append([c[0][0], sizey - c[0][1]])
-appr_masood_zero = masood(cnv[0][0], False, 20)
+appr_masood_zero = masood(cnv[0][0], True, 0.6)
 res_points.append([])
 for c in appr_masood_zero:
     res_points[len(res_points) - 1].append([c[0], sizey - c[1]])
@@ -575,27 +574,3 @@ model.mesh.generate(2)
 
 gmsh.write("audi/1.geo_unrolled")
 gmsh.finalize()
-
-
-#подсчет ошибок
-# res_dp = calculate_errs(appr_cnv, cnv[0][0])
-# res_it_del = calculate_errs(appr_iterate_deleting, cnv[0][0])
-# res_mas = calculate_errs(appr_masood, cnv[0][0])
-#
-# print('DP')
-# print(len(appr_cnv))
-# # print(res_dp)
-# print('MaxErr =', max(res_dp))
-# print('ISE =', sum(res_dp))
-
-# print('it_del')
-# print(len(appr_iterate_deleting))
-# # print(res_it_del)
-# print('MaxErr =', max(res_it_del))
-# print('ISE =', sum(res_it_del))
-#
-# print('masood')
-# print(len(appr_masood))
-# # print(res_mas)
-# print('MaxErr =', max(res_mas))
-# print('ISE =', sum(res_mas))
