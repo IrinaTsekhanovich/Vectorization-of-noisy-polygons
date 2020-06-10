@@ -473,38 +473,38 @@ for c in appr_masood_2:
     appr_masood_second.append([c[0], sizey - c[1]])
 
 #points 0,3 - big circle arc;1,2 - small circle arc
-tmp = [[0,appr_masood_second[0][0],appr_masood_second[0][1]],[0,appr_masood_second[0][0],appr_masood_second[0][1]],
-       [0,appr_masood_second[0][0],appr_masood_second[0][1]],[0,appr_masood_second[0][0],appr_masood_second[0][1]]]
+outer_points = [[0, appr_masood_second[0][0], appr_masood_second[0][1]], [0, appr_masood_second[0][0], appr_masood_second[0][1]],
+                [0,appr_masood_second[0][0],appr_masood_second[0][1]], [0,appr_masood_second[0][0],appr_masood_second[0][1]]]
 for i in range(len(appr_masood_second)):
-    if appr_masood_second[i][0] <= tmp[0][1] and appr_masood_second[i][1] > tmp[0][2]:
-        tmp[0] = [i,appr_masood_second[i][0], appr_masood_second[i][1]]
-    if appr_masood_second[i][0] <= tmp[1][1] and appr_masood_second[i][1] < tmp[1][2]:
-        tmp[1] = [i,appr_masood_second[i][0], appr_masood_second[i][1]]
-    if appr_masood_second[i][0] > tmp[2][1] and appr_masood_second[i][1] <= tmp[2][2]:
-        tmp[2] = [i,appr_masood_second[i][0], appr_masood_second[i][1]]
-    if appr_masood_second[i][0] >= tmp[3][1] and appr_masood_second[i][1] >= tmp[3][2]:
-        tmp[3] = [i,appr_masood_second[i][0], appr_masood_second[i][1]]
+    if appr_masood_second[i][0] <= outer_points[0][1] and appr_masood_second[i][1] > outer_points[0][2]:
+        outer_points[0] = [i, appr_masood_second[i][0], appr_masood_second[i][1]]
+    if appr_masood_second[i][0] <= outer_points[1][1] and appr_masood_second[i][1] < outer_points[1][2]:
+        outer_points[1] = [i, appr_masood_second[i][0], appr_masood_second[i][1]]
+    if appr_masood_second[i][0] > outer_points[2][1] and appr_masood_second[i][1] <= outer_points[2][2]:
+        outer_points[2] = [i, appr_masood_second[i][0], appr_masood_second[i][1]]
+    if appr_masood_second[i][0] >= outer_points[3][1] and appr_masood_second[i][1] >= outer_points[3][2]:
+        outer_points[3] = [i, appr_masood_second[i][0], appr_masood_second[i][1]]
 
 
 smth = []
-for i in range(tmp[0][0]+1, len(appr_masood_second)):
+for i in range(outer_points[0][0] + 1, len(appr_masood_second)):
     smth.append(appr_masood_second[i])
-for i in range(tmp[1][0]):
+for i in range(outer_points[1][0]):
     smth.append(appr_masood_second[i])
 res_points.append(smth)
 smth = []
-for i in range(tmp[2][0]+1, tmp[3][0]):
+for i in range(outer_points[2][0] + 1, outer_points[3][0]):
     smth.append(appr_masood_second[i])
 
-line0 = create_line([tmp[0][1],tmp[0][2]], [tmp[1][1],tmp[1][2]])
-line1 = create_line([tmp[2][1],tmp[2][2]], [tmp[3][1],tmp[3][2]])
+line0 = create_line([outer_points[0][1], outer_points[0][2]], [outer_points[1][1], outer_points[1][2]])
+line1 = create_line([outer_points[2][1], outer_points[2][2]], [outer_points[3][1], outer_points[3][2]])
 cntr = cross(line0, line1) # centre of circle
 
-angle = find_angle([tmp[2][1], tmp[2][2]], [tmp[3][1], tmp[3][2]])
-tmp[2][1] = (tmp[1][2]-cntr[1])*m.cos(angle)+cntr[0]
-tmp[2][2] = (tmp[1][2]-cntr[1])*m.sin(angle)+cntr[1]
+angle = find_angle([outer_points[2][1], outer_points[2][2]], [outer_points[3][1], outer_points[3][2]])
+outer_points[2][1] = (outer_points[1][2] - cntr[1]) * m.cos(angle) + cntr[0]
+outer_points[2][2] = (outer_points[1][2] - cntr[1]) * m.sin(angle) + cntr[1]
 
-line1 = create_line([tmp[2][1],tmp[2][2]], [tmp[3][1],tmp[3][2]])
+line1 = create_line([outer_points[2][1], outer_points[2][2]], [outer_points[3][1], outer_points[3][2]])
 point1 = smth[0]
 point2 = smth[len(smth)-1]
 
@@ -553,7 +553,7 @@ lc = 1e-2
 
 factory.addPoint(cntr[0], cntr[1], 0, lc, 1)
 for i in range(4):
-    factory.addPoint(tmp[i][1], tmp[i][2], 0, lc, i+2)
+    factory.addPoint(outer_points[i][1], outer_points[i][2], 0, lc, i + 2)
 factory.addLine(2, 3, 1)
 factory.addCircleArc(3, 1, 4, 2)
 factory.addLine(4, 5, 3)
